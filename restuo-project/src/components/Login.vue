@@ -32,17 +32,18 @@ export default {
 
             if (result.status === 200 && result.data.length>0) {
                     alert('Sign up successful!');
+                    this.$router.push({name:'Home'})
                 }
                 
                 localStorage.setItem('user-info', JSON.stringify(result.data[0]));
-                this.$router.push({name:'Home'})
+                // this.$router.push({name:'Home'})
 
         },
         
         mounted(){
         let user=localStorage.getItem('user-info')
         if(user){
-            this.$router.push({name:'Home'})
+            this.$router.push({name:'Login'})
         }
     },
     movesingup(){

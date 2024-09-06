@@ -2,6 +2,7 @@
 <div>
     <Header />
     <h1>welcome {{ name }} Home page!</h1>
+    <div class="table-home">
     <table border="1">
         <tr>
             <th>id</th>
@@ -15,10 +16,13 @@
             <td>{{resto.name}}</td>
             <td>{{resto.address}}</td>
             <td>{{resto.contact}}</td>
-            <td><router-link :to="/update/+resto.id">Update</router-link></td>
+            <td><router-link :to="/update/+resto.id">Update</router-link>
+            <button class="delete-btn" v-on:click="deleteResturant(resto.id)">Delete</button>
+            </td>
           
         </tr>
     </table>
+</div>
 </div>
 </template>
 <script>
@@ -35,7 +39,14 @@ export default{
             resturant:[],
           }
     },
-   async mounted(){
+    methods:{
+     async   deleteResturant(id){
+            let result= await axios.delete("http://localhost:3000/resturant/"+id);
+            if(result.status==200){
+                this.loaded()
+            }
+        },
+        async loaded(){
         let user=localStorage.getItem('user-info');
         this.name= JSON.parse(user).name;
         if(!user){
@@ -44,6 +55,11 @@ export default{
         let result= await axios.get("http://localhost:3000/resturant");
         console.log(result)
         this.resturant=result.data
+    },
+    },
+
+    mounted(){
+       this.loaded()
     }
 }
 </script>
@@ -52,5 +68,15 @@ export default{
 td{
     width:160px;
     height:40px;
+}
+.delete-btn{
+    background: transparent;
+    color: red;
+    border: none;
+    cursor: pointer;
+}
+.table-home{
+    display: flex;
+    justify-content: center;
 }
 </style>
