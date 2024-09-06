@@ -8,6 +8,7 @@
             <input type="text" v-model="password" placeholder="Enter Password...">
             <button @click="userLogin">Sign Up</button>
         </div>
+        <a v-on:click="moveLogin" href="">Login</a>
     </div>
 </template>
 
@@ -41,14 +42,19 @@ export default {
                 localStorage.setItem('user-info', JSON.stringify(result.data));
                 this.$router.push({name:'Home'})
 
-        }
-    },
+        },
     mounted(){
         let user=localStorage.getItem('user-info')
         if(user){
             this.$router.push({name:'Home'})
         }
+    },
+    moveLogin(){
+        console.log("helo")
+            this.$router.push({name:'Login'})
+        }
     }
+    
 };
 </script>
 
